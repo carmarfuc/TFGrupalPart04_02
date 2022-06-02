@@ -11,36 +11,36 @@ module.exports = (sequelize) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     usertype: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     nickName: {    //2
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     fullName: {       //3
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     mail: {       //8
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true
     },
     phone: {      //6
       type: DataTypes.STRING,
-      AllowNull: false,
+      AllowNull: true,
     },
     address: {      //5
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     birthdate: {  //4
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     country: {    //7
       type: DataTypes.STRING,

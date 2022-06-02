@@ -75,7 +75,7 @@ router.post("/User_loguin", async(req,res)=>{
 router.post("/signup", async(req,res)=>{
     const { email, password } = req.body;
     try {
-        const [user, created] = await Users.findOrCreate({
+        const [user, created] = await User.findOrCreate({
             where: {email },
             defaults: {email, password }
         })
@@ -89,7 +89,7 @@ router.post("/signup", async(req,res)=>{
 router.post("/login", async(req,res)=>{
     const { email, password } = req.body;
     try {
-        const user = await Users.findOne({
+        const user = await User.findOne({
             where: {email: email}
         })
         if(user.password === password) res.send(user)
