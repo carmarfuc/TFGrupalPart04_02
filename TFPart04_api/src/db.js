@@ -5,28 +5,26 @@ const path = require('path');
 const { userInfo } = require('os');
 const { DB_USER ,DB_PASSWORD ,DB_HOST,DB_NAME,DB_DIALECT } = process.env;
 
-
-
-
-
-// const DB_USER = 'postgres'
-// const DB_PASSWORD = 'nutertools11'
-// const DB_HOST = 'localhost'
-// const DB_NAME = 'marketplace'
-
-// console.log(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`);
-// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-//   {
-//     logging: false, // set to console.log to see the raw SQL queries
-//     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-//   }
-// );
-console.log(DB_NAME, DB_USER, DB_PASSWORD,DB_HOST,DB_DIALECT)
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: DB_HOST,
-  dialect: DB_DIALECT/* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */
-});
-
+let sequelize;
+if(process.env.NODE_ENV !== 'production'){
+  sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+    port:process.env.PORT,
+    host: DB_HOST,
+    dialect: DB_DIALECT,
+  });
+}else{
+  sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+    port:process.env.PORT,
+    host: DB_HOST,
+    dialect: DB_DIALECT,
+    dialectOptions: {
+      ssl: {
+        require: true, // This will help you. But you will see nw error
+        rejectUnauthorized: false // This line will fix new error
+      }
+    },
+  });
+}
 
 const basename = path.basename(__filename);
 
@@ -55,7 +53,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Category, Product, User, Review, User_product, OrdersHead, Orderspos } = sequelize.models;
+const { Category, Product, User, Review, User_product, Orders_head, Orders_pos } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -63,13 +61,19 @@ const { Category, Product, User, Review, User_product, OrdersHead, Orderspos } =
 Product.belongsToMany(Category, { through: "productTOcategory" });
 Category.belongsToMany(Product, { through: "productTOcategory" });
 
-User.hasMany(Review, { foreignKey: 'userId' })
+User.hasMany(Orders_head,{foreignKey:'userEmail'});
+Orders_head.belongsTo(User)
+
+Orders_head.hasMany(Orders_pos,{foreignKey:'ordersHeadId'})
+Orders_pos.belongsTo(Orders_head)
+
+User.hasMany(Review,{foreignKey: 'userEmail'})
 Review.belongsTo(User)
 
-User.belongsToMany(Product, { through: User_product })
-Product.belongsToMany(User, { through: User_product })
+User.belongsToMany(Product,{ through: User_product })
+Product.belongsToMany(User,{ through: User_product })
 
-Product.hasMany(Review, { foreignKey: 'productId' })
+Product.hasMany(Review,{foreignKey: 'productId'})
 Review.belongsTo(Product)
 
 

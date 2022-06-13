@@ -2,31 +2,28 @@ const {DataTypes} = require('sequelize')
 
 module.exports = (sequelize) => {
 
-  sequelize.define('ordersHead', {
+  sequelize.define('orders_head', {
      id: {
       type: DataTypes.UUID,
       defaulValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     date:{
-        type: DataTypes.DATE(6),
-        allowNull: false
+        type: DataTypes.DATE
     },
     status:{
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    id_user:{
-        type: DataTypes.UUID,
-        allowNull: false
+        type: DataTypes.STRING
     },
     currency:{
-        type:DataTypes.FLOAT,
-        allowNull: false
+        type:DataTypes.STRING,
+        allowNull: true
+    },
+    userEmail:{
+        type:DataTypes.STRING,
+        allowNull: true,
     },
     total:{
-        type:DataTypes.FLOAT,
-        allowNull: false
+        type:DataTypes.FLOAT
     }    
   },{timestamps: true,
     createdAt: true,

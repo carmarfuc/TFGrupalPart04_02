@@ -3,47 +3,48 @@ const { Sequelize, DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define('user', {
-    id: {
-      type: DataTypes.STRING,
-      //defaultValue: Sequelize.UUIDV4,
-      allowNull: false,
-      primaryKey: true
-    },
+    // id: {
+    //   type: DataTypes.STRING(5),
+    //   allowNull: false,
+    //   primaryKey: true
+    // },
     password: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.STRING(20),
+      allowNull: false,
     },
     usertype: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(8),
       allowNull: true,
+      defaultValue: "user",
     },
     nickName: {    //2
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: true,
     },
-    fullName: {       //3
-      type: DataTypes.STRING,
+    firstName: {       //3
+      type: DataTypes.STRING(20),
       allowNull: true,
     },
-    mail: {       //8
-      type: DataTypes.STRING,
+    lastName: {       //3
+      type: DataTypes.STRING(20),
       allowNull: true,
+    },
+    email: {       //8
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      primaryKey: true,
       unique: true
     },
     phone: {      //6
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(15),
       AllowNull: true,
     },
-    address: {      //5
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     birthdate: {  //4
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(10),
       allowNull: true,
     },
     country: {    //7
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: true,
     },
     verify: {  //11
@@ -58,4 +59,3 @@ module.exports = (sequelize) => {
 
   );
 }
-

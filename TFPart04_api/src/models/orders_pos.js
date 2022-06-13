@@ -2,17 +2,8 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
 
-  sequelize.define('orderspos', {
-    idOrdersHead: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true
-    },
-    position:{
-        type:DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-    },
+  sequelize.define('orders_pos', {
+    
     idProduct:{
         type: DataTypes.UUID,
         allowNull: false
@@ -20,10 +11,15 @@ module.exports = (sequelize) => {
     description: {
       type: DataTypes.TEXT,
     },
+    price:{
+        type:DataTypes.FLOAT
+    },
+    position:{
+        type:DataTypes.INTEGER
+    },
     cuantity:{
-        type:DataTypes.INTEGER,
-        allowNull: false
-    }
+        type:DataTypes.INTEGER
+    },
   },{timestamps: true,
     createdAt: true,
     updatedAt: false
