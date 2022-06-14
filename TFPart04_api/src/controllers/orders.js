@@ -5,7 +5,8 @@ const { v4: uuidv4,validate } = require("uuid");
 envio de ordenes por Body:
 {
     currency:"ARS",
-    email:mariano@gmail.com,
+    userId:"2",
+    total:19,
     orders:[
         {
             productId:"c461032e-bd5a-4271-aa46-e495ff3c0b36",
@@ -21,7 +22,7 @@ envio de ordenes por Body:
 }
 */
 async function createOrder(req,res){
- console.log(req.body)   
+    
     try{
         const order = await Orders_head.create({
             id:uuidv4(),
@@ -35,7 +36,7 @@ async function createOrder(req,res){
         req.body.orders.forEach(async (orden,i)=>{
             await Orders_pos.create({
                 ordersHeadId:order.id,
-                idProduct:orden.idProduct,
+                idProduct:orden.productId,
                 description:orden.description,
                 price:orden.price,
                 position:i+1,

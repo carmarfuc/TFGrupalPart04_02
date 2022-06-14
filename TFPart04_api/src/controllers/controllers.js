@@ -444,7 +444,7 @@ const ordersdb = [
     {
         id:"c461032e-bd5a-4271-aa46-e495ff3c0b36",
         currency:"ARS",
-        userEmail:"mariano@gmail.com",
+        email:"mariano@gmail.com",
         total:19,
         orders:[
             {
@@ -462,7 +462,7 @@ const ordersdb = [
     {
         id:"a817a66a-636b-4fa8-a27f-90d5a75d830f",
         currency:"ARS",
-        userEmail:"sedwarb@gmail.com",
+        email:"sedwarb@gmail.com",
         total:19,
         orders:[
             {
@@ -486,7 +486,7 @@ async function chargeOrder(){
             date:Date(),
             status:"pending",
             currency:orderdb.currency,
-            userEmail:orderdb.userEmail,
+            email:orderdb.email,
             total:orderdb.total
         })        
     
