@@ -22,10 +22,10 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { chargecategories, chargeproducts, chargeusers, chargereviews,chargeOrder } = require('./src/controllers/controllers')
 
-const LOCAL_PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(LOCAL_PORT, () => {
+  server.listen(3001/*3001*/, () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
     chargecategories();
     chargeusers();

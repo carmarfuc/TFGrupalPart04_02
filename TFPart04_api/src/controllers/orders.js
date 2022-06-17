@@ -1,12 +1,11 @@
 const { User, Orders_head, Orders_pos } = require("../db.js");
 const { v4: uuidv4,validate } = require("uuid");
-
+const {sendMail} = require('./mailProds.js');
 /*
 envio de ordenes por Body:
 {
     currency:"ARS",
-    userId:"2",
-    total:19,
+    email:mariano@gmail.com,
     orders:[
         {
             productId:"c461032e-bd5a-4271-aa46-e495ff3c0b36",
@@ -22,7 +21,7 @@ envio de ordenes por Body:
 }
 */
 async function createOrder(req,res){
-    
+   
     try{
         const order = await Orders_head.create({
             id:uuidv4(),
@@ -36,13 +35,20 @@ async function createOrder(req,res){
         req.body.orders.forEach(async (orden,i)=>{
             await Orders_pos.create({
                 ordersHeadId:order.id,
-                idProduct:orden.productId,
+                idProduct:orden.idProduct,
                 description:orden.description,
                 price:orden.price,
                 position:i+1,
                 cuantity:1
             })
         })
+        
+        const ventaOrder= {
+            id:order.id,
+            det:req.body.orders
+        }
+        
+        sendMail("created", order.id);
         res.status(200).send('Creacion de Orden Exitosa')
     }catch(error){
         res.send(`Error: ${error}`)
@@ -56,8 +62,11 @@ Actualizar status de la orden
 */
 async function updateStateOrder(req,res){
     const { orderId, status } = req.body;
+    
+    sendMail("updated", req.body.orderId); 
     try{
         await Orders_head.update({orderId,status},{where:{id:orderId}})
+        // sendMail("updated", req.body, );
         res.send("Se ha actualizdo el estados de la orden")
     }catch(error){res.send(`Error: ${error}`)}    
 }

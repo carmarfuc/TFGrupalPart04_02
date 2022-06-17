@@ -1,22 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import ProductCards from '../ProductCards/ProductCards';
 import Filters from '../Filters/Filters';
 import Search from '../Search/Search';
-import styles from './Home.module.css'
-
+import { useDispatch } from 'react-redux';
+import { cartItems, getorder } from '../../redux/actions';
 
 function Home() {
+  const dispatch = useDispatch();
+  const [products, setProducts] = useState([]);
+  let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
+  // let URL = 'https://54.227.99.93:3001'
+  let URL;
+  process.env.NODE_ENV === "development" ? URL = "http://localhost:3001" : URL = "https://54.227.99.93:3001";
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const response = await axios.get(`${URL}/product/all`);
+      setProducts(response.data);
+    }
+    dispatch(getorder());
+    loadProducts();
+    if (dataCart?.length) {
+      console.log(dataCart)
+      dispatch(cartItems(dataCart.length))
+    }
+  }, [products.length]);
 
   return (
     <>
-      <div className={styles.background}>
-        <Search />
+      <div>
+        <Search allProducts={products} />
         <Filters />
-        <ProductCards />
-
+        <ProductCards allProducts={products} />
       </div>
     </>
   );
 };
-  
+
 export default Home;

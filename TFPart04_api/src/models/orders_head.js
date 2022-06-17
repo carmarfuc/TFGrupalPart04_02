@@ -18,6 +18,10 @@ module.exports = (sequelize) => {
         type:DataTypes.STRING,
         allowNull: true
     },
+    userEmail:{
+        type:DataTypes.STRING,
+        allowNull: true,
+    },
     total:{
         type:DataTypes.FLOAT
     }    

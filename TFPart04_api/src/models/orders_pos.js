@@ -3,21 +3,21 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
 
   sequelize.define('orders_pos', {
-    position:{
-        type:DataTypes.INTEGER
-    },
     idProduct:{
-        type: DataTypes.UUID,
-        allowNull: false
+      type: DataTypes.UUID,
+      allowNull: false
     },
     description: {
       type: DataTypes.TEXT,
     },
-    cuantity:{
-        type:DataTypes.INTEGER
-    },
     price:{
-        type:DataTypes.FLOAT
+      type:DataTypes.FLOAT
+    },
+    position:{
+      type:DataTypes.INTEGER
+    },
+    cuantity:{
+      type:DataTypes.INTEGER
     },
   },{timestamps: true,
     createdAt: true,

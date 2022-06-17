@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app",
+    "start": "nodemon -L",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
   "author": "Grupo_Part04_Henry",
@@ -23,6 +23,7 @@
     "ioredis": "^4.19.2",
     "is-uuid": "^1.0.2",
     "jsonwebtoken": "^8.5.1",
+    "mercadopago": "^1.5.13",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.5",
